@@ -32,48 +32,53 @@ public class CannonManager : MonoBehaviour {
         targetRotation.eulerAngles = new Vector3(0f, headRotation, 0f);
         cannonParent.transform.rotation = targetRotation;
 
-        if (Input.GetKeyDown("w"))
-        {
-            if (!HasFiredOnce)
-            {
-                HelpText.SetActive(false);
-                HasFiredOnce = true;
-            }
 
-            if (GetComponent<AmmoManager>().shotsRemaining > 0 && !DontShoot)
-            {
-                GetComponent<AudioSource>().pitch = Random.Range(0.98f, 1.02f);
-                GetComponent<AudioSource>().Play();
+        Debug.Log("dont shoot = " + DontShoot);
 
-                projectileClone = (GameObject)Instantiate(projectileCat, spawnSocket.transform.position, Camera.main.transform.rotation);
-                projectileClone.AddComponent<AudioSource>();
-                projectileClone.GetComponent<AudioSource>().volume = Random.Range(1.0f, 1.5f);
-                projectileClone.GetComponent<AudioSource>().pitch = Random.Range(0.95f, 1.05f);
-                projectileClone.GetComponent<AudioSource>().maxDistance = 10.0f;
-                projectileClone.GetComponent<AudioSource>().dopplerLevel = 0.5f;
-                projectileClone.GetComponent<AudioSource>().spatialBlend = 1.0f;
-                projectileClone.GetComponent<AudioSource>().spread = 360.0f;
-                projectileClone.GetComponent<AudioSource>().PlayOneShot(meowSounds[Random.Range(0, meowSounds.Length)]);
+ //       if (Input.GetKeyDown("w"))
+ //       {
+ //           if (!HasFiredOnce)
+ //           {
+ //               HelpText.SetActive(false);
+ //               HasFiredOnce = true;
+ //           }
 
-                cannonRef.GetComponent<Animation>().Rewind();
-                projectileClone.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * 1000f);
-                cannonRef.GetComponent<Animation>().Play();
+ //           if (GetComponent<AmmoManager>().shotsRemaining > 0 && !DontShoot)
+ //           {
+ //               GetComponent<AudioSource>().pitch = Random.Range(0.98f, 1.02f);
+ //               GetComponent<AudioSource>().Play();
 
-                GetComponent<AmmoManager>().shotsRemaining--;
-                GetComponent<AmmoManager>().updateShotsRemaining();
-            }
+ //               projectileClone = (GameObject)Instantiate(projectileCat, spawnSocket.transform.position, Camera.main.transform.rotation);
+ //               projectileClone.AddComponent<AudioSource>();
+ //               projectileClone.GetComponent<AudioSource>().volume = Random.Range(1.0f, 1.5f);
+ //               projectileClone.GetComponent<AudioSource>().pitch = Random.Range(0.95f, 1.05f);
+ //               projectileClone.GetComponent<AudioSource>().maxDistance = 10.0f;
+ //               projectileClone.GetComponent<AudioSource>().dopplerLevel = 0.5f;
+ //               projectileClone.GetComponent<AudioSource>().spatialBlend = 1.0f;
+ //               projectileClone.GetComponent<AudioSource>().spread = 360.0f;
+ //               projectileClone.GetComponent<AudioSource>().PlayOneShot(meowSounds[Random.Range(0, meowSounds.Length)]);
 
-            if (GetComponent<AmmoManager>().shotsRemaining == 0)
-            {
-                GetComponent<AmmoManager>().ToggleEmptyAlert(true);
-                StartCoroutine(FadeTo(0f, 2f));
-            }
-            //if (projectileClone != null) Destroy(projectileClone, 5f);
-        }
+ //               cannonRef.GetComponent<Animation>().Rewind();
+ //               projectileClone.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * 1000f);
+ //               cannonRef.GetComponent<Animation>().Play();
+
+ //               GetComponent<AmmoManager>().shotsRemaining--;
+ //               GetComponent<AmmoManager>().updateShotsRemaining();
+ //           }
+
+ //           if (GetComponent<AmmoManager>().shotsRemaining == 0)
+ //           {
+ //               GetComponent<AmmoManager>().ToggleEmptyAlert(true);
+ //               cameraRef.gameObject.GetComponent<UFOTargetingManager>().showGameOverMenu();
+ //               StartCoroutine(FadeTo(0f, 2f));
+ //           }
+ //           //if (projectileClone != null) Destroy(projectileClone, 5f);
+ //       }
 	}
 
     void OnSelect()
     {
+       // Debug.Log("FIRE!");
         if (!HasFiredOnce)
         {
             HelpText.SetActive(false);

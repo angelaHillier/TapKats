@@ -25,7 +25,7 @@ public class GazeGestureManager : MonoBehaviour
         recognizer = new GestureRecognizer();
         recognizer.TappedEvent += (source, tapCount, ray) =>
         {
-            cannonManager.SendMessageUpwards("OnSelect");
+            
             // Send an OnSelect message to the focused object and its ancestors.
             if (FocusedObject != null)
             {
@@ -33,12 +33,28 @@ public class GazeGestureManager : MonoBehaviour
             }
 
         };
+
+        
         recognizer.StartCapturingGestures();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug AirTap Control
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+
+            cannonManager.SendMessageUpwards("OnSelect");
+
+            if (FocusedObject != null)
+            {
+                FocusedObject.SendMessageUpwards("OnSelect");
+            }
+        }
+
+
+
         // Figure out which hologram is focused this frame.
         GameObject oldFocusObject = FocusedObject;
 
@@ -67,11 +83,12 @@ public class GazeGestureManager : MonoBehaviour
             if (FocusedObject.tag == "VillagerCat")
             {
                 cannonManager.GetComponent<CannonManager>().DontShoot = true;
-            } else if (FocusedObject.tag != "VillagerCat")
+            }
+            else if (FocusedObject.tag != "VillagerCat")
             {
                 cannonManager.GetComponent<CannonManager>().DontShoot = false;
             }
-
+            //////////
             if (FocusedObject.tag == "DefendText" && GameObject.Find("EndGameText").activeInHierarchy == true)
             {
                 GameObject.Find("DefendAgain").GetComponent<Renderer>().material.mainTexture = endHoverTexture;
