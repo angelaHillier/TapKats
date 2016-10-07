@@ -14,6 +14,8 @@ public class GazeGestureManager : MonoBehaviour
     public Texture endTexture;
     public Texture endHoverTexture;
     public enemySpawner EnemySpawner;
+    public TextMesh debug;
+   
 
     GestureRecognizer recognizer;
 
@@ -25,7 +27,7 @@ public class GazeGestureManager : MonoBehaviour
         recognizer = new GestureRecognizer();
         recognizer.TappedEvent += (source, tapCount, ray) =>
         {
-            
+            cannonManager.SendMessageUpwards("OnSelect");
             // Send an OnSelect message to the focused object and its ancestors.
             if (FocusedObject != null)
             {
@@ -39,7 +41,7 @@ public class GazeGestureManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         //Debug AirTap Control
         if (Input.GetKeyDown(KeyCode.W))
@@ -67,6 +69,9 @@ public class GazeGestureManager : MonoBehaviour
         RaycastHit hitInfo;
         if (Physics.Raycast(headPosition, gazeDirection, out hitInfo))
         {
+            if(debug != null)
+                debug.text = hitInfo.collider.gameObject.ToString();
+
             // If the raycast hit a hologram, use that as the focused object.
             FocusedObject = hitInfo.collider.gameObject;
 

@@ -6,12 +6,21 @@ public class Cat : MonoBehaviour {
     public bool ufoHasTargetedMe = false;
     public AudioClip[] meows = new AudioClip[4];
     public MeowTextManager meowText;
+
+    [HideInInspector]
+    public GameObject myBase;
+
     
 
     private Vector3 initialPosition;
 
-    void Start() {
+    void Awake()
+    {
         Camera.main.GetComponent<UFOTargetingManager>().kitties.Add(this.gameObject);
+    }
+
+    void Start() {
+        
         GetComponent<AudioSource>().clip = meows[Random.Range(0, meows.Length)];
         InvokeRepeating("playMeow", 0.0f, Random.Range(2.0f, 3.0f));
         GetComponent<AudioSource>().volume = 0.25f;
@@ -31,6 +40,7 @@ public class Cat : MonoBehaviour {
     {
         GameObject.Find("CannonParent").GetComponent<AmmoManager>().shotsRemaining++;
         GameObject.Find("CannonParent").GetComponent<AmmoManager>().updateShotsRemaining();
+        myBase.GetComponent<basePad>().catRescued();
         Camera.main.GetComponent<UFOTargetingManager>().kitties.Remove(Camera.main.GetComponent<UFOTargetingManager>().kitties.Find(kat => kat.gameObject == gameObject));
         Destroy(this.gameObject);
     }

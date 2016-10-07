@@ -11,8 +11,8 @@ public class KingKatkaManager : MonoBehaviour {
     void Start () {
 
         StartCoroutine(WaitFor(1f));
-        MenuItem1.SetActive(false);
-        MenuItem2.SetActive(false);
+        MenuItem1.SetActive(true);
+        MenuItem2.SetActive(true);
         exampleEnemy.gameObject.SetActive(false);
 
     }

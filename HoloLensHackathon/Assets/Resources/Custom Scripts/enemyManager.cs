@@ -53,17 +53,17 @@ public class enemyManager : MonoBehaviour {
         }
     }
 
-    IEnumerator stateTimer()
-    {
+    //IEnumerator stateTimer()
+    //{
 
-        //FIGURE OUT THIS THING
-        yield return new WaitForSeconds(10.0f);
-        if (transformOfCatToAbduct.gameObject != null)
-        {
-            Destroy(transformOfCatToAbduct.gameObject); 
-        }
-        Destroy(this.gameObject);
-    }
+    //    //FIGURE OUT THIS THING
+    //    yield return new WaitForSeconds(10.0f);
+    //    if (transformOfCatToAbduct.gameObject != null)
+    //    {
+    //        Destroy(transformOfCatToAbduct.gameObject); 
+    //    }
+    //    Destroy(this.gameObject);
+    //}
 
     void Update() {
         transform.Rotate(new Vector3(0.0f, 1.0f, 0.0f));
@@ -73,16 +73,16 @@ public class enemyManager : MonoBehaviour {
             switch (ufoStatus)
             {
                 case ufoAction.Idle:
-                    StopCoroutine(stateTimer());
-                    StartCoroutine(stateTimer());
+                   // StopCoroutine(stateTimer());
+                   // StartCoroutine(stateTimer());
                     findAnUntargetedCat();
                     break;
 
 
 
                 case ufoAction.InPursuit:
-                    StopCoroutine(stateTimer());
-                    StartCoroutine(stateTimer());
+                   // StopCoroutine(stateTimer());
+                   // StartCoroutine(stateTimer());
                     if (transformOfCatToAbduct != null)
                     {
                         if (!GetComponent<AudioSource>().isPlaying) GetComponent<AudioSource>().PlayOneShot(pursuitSound, 1f);
@@ -103,8 +103,8 @@ public class enemyManager : MonoBehaviour {
 
 
                 case ufoAction.Abducting:
-                    StopCoroutine(stateTimer());
-                    StartCoroutine(stateTimer());
+                   // StopCoroutine(stateTimer());
+                   // StartCoroutine(stateTimer());
                     if (!GetComponent<AudioSource>().isPlaying) GetComponent<AudioSource>().Play();
                     transformOfCatToAbduct.gameObject.GetComponent<SphereCollider>().enabled = false;
                     transformOfCatToAbduct.gameObject.GetComponent<Rigidbody>().useGravity = false;
@@ -113,6 +113,7 @@ public class enemyManager : MonoBehaviour {
 
                     if (Vector3.Distance(transform.position, transformOfCatToAbduct.transform.position) < 0.1f)
                     {
+                        transformOfCatToAbduct.GetComponent<Cat>().myBase.GetComponent<basePad>().catAbducted();
                         Camera.main.GetComponent<UFOTargetingManager>().kitties.Remove(Camera.main.GetComponent<UFOTargetingManager>().kitties.Find(kat => kat.gameObject == transformOfCatToAbduct.gameObject));
                         Destroy(transformOfCatToAbduct.gameObject);
                         ufoStatus = ufoAction.Idle;
