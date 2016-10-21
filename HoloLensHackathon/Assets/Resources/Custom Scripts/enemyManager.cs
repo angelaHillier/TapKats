@@ -19,8 +19,10 @@ public class enemyManager : MonoBehaviour {
 
     public bool isStartLevel;
 
-    void Start() {
+    
 
+    void Start() {
+        
     }
 
     void findAnUntargetedCat()
@@ -109,7 +111,7 @@ public class enemyManager : MonoBehaviour {
                     transformOfCatToAbduct.gameObject.GetComponent<SphereCollider>().enabled = false;
                     transformOfCatToAbduct.gameObject.GetComponent<Rigidbody>().useGravity = false;
                     transformOfCatToAbduct.transform.position = Vector3.SmoothDamp(transformOfCatToAbduct.transform.position, transform.position, ref velocity, abductionTime);
-                    transformOfCatToAbduct.localScale -= new Vector3(.01f, .01f, .01f);
+                    transformOfCatToAbduct.localScale -= new Vector3(.001f, .001f, .001f);
 
                     if (Vector3.Distance(transform.position, transformOfCatToAbduct.transform.position) < 0.1f)
                     {
@@ -134,9 +136,10 @@ public class enemyManager : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (other.tag == "Cat")
         {
+            Camera.main.GetComponent<UFOTargetingManager>().score++;
             Destroy(GameObject.FindGameObjectWithTag("Cat"));
-            GameObject.Find("CannonParent").GetComponent<AmmoManager>().shotsRemaining++;
-            GameObject.Find("CannonParent").GetComponent<AmmoManager>().updateShotsRemaining();
+           // GameObject.Find("CannonParent").GetComponent<AmmoManager>().shotsRemaining++;
+           // GameObject.Find("CannonParent").GetComponent<AmmoManager>().updateShotsRemaining();
             AudioSource.PlayClipAtPoint(smashSounds[Random.Range(0, smashSounds.Length)], transform.position);
             GameObject.Find("EnemySpawner").GetComponent<enemySpawner>().spawnedUfos.Remove(gameObject);
             if (transformOfCatToAbduct.gameObject != null)
@@ -148,10 +151,12 @@ public class enemyManager : MonoBehaviour {
                 transformOfCatToAbduct.gameObject.GetComponent<Cat>().playCoroutine();
             }
 
+            
             this.gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
             this.gameObject.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
             this.gameObject.transform.GetChild(0).GetComponent<MeshExploder>().Explode();
             this.gameObject.transform.GetChild(1).GetComponent<MeshExploder>().Explode();
+            
             Destroy(this.gameObject);
         }
     }

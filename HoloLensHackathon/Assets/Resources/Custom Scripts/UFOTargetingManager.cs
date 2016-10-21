@@ -5,9 +5,14 @@ using System.Linq;
 using UnityEngine.Events;
 
 public class UFOTargetingManager : MonoBehaviour {
+    public int score = 0;
+
     public List<GameObject> kitties = new List<GameObject>();
     public GameObject gameOverText;
     public UnityEvent gameHasEnded;
+
+    
+
 
     void Update()
     {
@@ -29,6 +34,7 @@ public class UFOTargetingManager : MonoBehaviour {
 
     public void showGameOverMenu()
     {
+        gameOverText.GetComponentInChildren<Score>().score = score;
         gameOverText.SetActive(true);
         gameOverText.transform.parent = null;
     }

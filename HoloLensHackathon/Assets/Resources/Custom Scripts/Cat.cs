@@ -13,6 +13,7 @@ public class Cat : MonoBehaviour {
     
 
     private Vector3 initialPosition;
+    private Quaternion initialRotation;
 
     void Awake()
     {
@@ -26,7 +27,9 @@ public class Cat : MonoBehaviour {
         GetComponent<AudioSource>().volume = 0.25f;
 
         initialPosition = transform.position;
-	}
+        initialRotation = transform.rotation;
+
+    }
 
     void playMeow()
     {
@@ -61,6 +64,18 @@ public class Cat : MonoBehaviour {
 
             yield return null;
 
+        }
+
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if(col.tag == "shredder")
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            transform.rotation = initialRotation;
+            transform.position = initialPosition;
         }
 
     }

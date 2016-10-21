@@ -9,7 +9,8 @@ public class enemySpawner : MonoBehaviour {
     public float shipSpawnRate = 5.0f;
     public float UFOSpinSpeed = 2.0f;
     public bool isStartLevel;
-
+   
+    
     void Start () {
         InvokeRepeating("spawnAShipIfUnderBudget", 0.0f, shipSpawnRate);
 	}

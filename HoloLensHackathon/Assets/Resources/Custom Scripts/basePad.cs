@@ -5,8 +5,9 @@ public class basePad : MonoBehaviour {
 
     public GameObject CatPre;
     public float timer;
+    public AudioClip[] smashSounds = new AudioClip[4];
 
-    
+
 
     GameObject myCat;
     bool isActive = true;
@@ -34,6 +35,10 @@ public class basePad : MonoBehaviour {
     public void catAbducted()
     {
         isActive = false;
+        AudioSource.PlayClipAtPoint(smashSounds[Random.Range(0, smashSounds.Length)], transform.position);
+
+        gameObject.GetComponent<MeshExploder>().Explode();
+        Destroy(gameObject);
     }
 
     public void catRescued()

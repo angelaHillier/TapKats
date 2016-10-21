@@ -10,6 +10,8 @@ TagManager:
   - Exploder
   - DefendText
   - pizza
+  - Score
+  - shredder
   layers:
   - Default
   - TransparentFX
